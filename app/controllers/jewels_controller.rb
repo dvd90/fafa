@@ -28,13 +28,20 @@ class JewelsController < ApplicationController
     end
   end
 
-  def edit          #
+  def edit
   end
 
   def update
+    if @jewel.update(jewel_params)
+      render :admin_dashboard
+    else
+      render :index
+    end
   end
 
   def destroy
+    @jewel.destroy
+    render :admin_dashboard
   end
 
   private
