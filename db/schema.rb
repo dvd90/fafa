@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_22_125909) do
+ActiveRecord::Schema.define(version: 2018_11_25_122133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,11 +18,13 @@ ActiveRecord::Schema.define(version: 2018_11_22_125909) do
   create_table "jewels", force: :cascade do |t|
     t.string "name"
     t.boolean "available"
-    t.integer "price"
     t.text "description"
     t.string "photo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "sku"
+    t.integer "price"
+    t.integer "price_cents", default: 0, null: false
   end
 
   create_table "orders", force: :cascade do |t|
@@ -30,6 +32,10 @@ ActiveRecord::Schema.define(version: 2018_11_22_125909) do
     t.bigint "jewel_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "state"
+    t.string "jewel_sku"
+    t.jsonb "payment"
+    t.integer "amount_cents", default: 0, null: false
     t.index ["jewel_id"], name: "index_orders_on_jewel_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end

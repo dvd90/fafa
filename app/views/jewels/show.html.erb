@@ -1,2 +1,5 @@
 <h1><%= @jewel.name %></h1>
-<%= link_to "Buy", new_jewel_order_path(@jewel) %>
+<%= form_tag jewel_orders_path(@jewel) do %>
+  <%= hidden_field_tag 'jewel_id', @jewel.id %>
+  <%= submit_tag 'Purchase', class: 'btn btn-primary' %>
+<% end %>
