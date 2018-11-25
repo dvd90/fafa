@@ -20,11 +20,11 @@ class JewelsController < ApplicationController
   end
 
   def create
-    @jewel.new(jewel_params)
+    @jewel = Jewel.new(jewel_params)
     if @jewel.save
-      render :admin_dashboard
+      redirect_to :admin_dashboard
     else
-      render :index
+      redirect_to :index
     end
   end
 
@@ -33,25 +33,25 @@ class JewelsController < ApplicationController
 
   def update
     if @jewel.update(jewel_params)
-      render :admin_dashboard
+      redirect_to :admin_dashboard
     else
-      render :index
+      redirect_to :index
     end
   end
 
   def destroy
     @jewel.destroy
-    render :admin_dashboard
+    redirect_to :admin_dashboard
   end
 
   private
 
   def jewel_params
-    params.require(:jewel).permit(:name, :available, :price, :description, :picture)
+    params.require(:jewel).permit(:name, :available, :price, :description, :photo)
   end
 
   def admin_check
-    render :index unless current_user.admin
+    redirect_to :index unless current_user.admin
   end
 
   def set_jewel
