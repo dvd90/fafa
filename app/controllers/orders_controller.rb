@@ -6,6 +6,7 @@ class OrdersController < ApplicationController
   end
 
   def show
+    @jewel = Jewel.find(params[:jewel_id])
   end
 
   def new
@@ -14,11 +15,10 @@ class OrdersController < ApplicationController
 
   def create
     @jewel = Jewel.find(params[:jewel_id])
-    @order = Order.new
-    @order.user = current_user
-    @order.jewel = @jewel
+    @order = Order.create!(jewel_sku: @jewel.sku, amount: @jewel.price, state: 'pending', user: current_user)
+    @order.jewel_id = @jewel.id
     if @order.save
-      redirect_to jewel_order_path(@jewel, @order)
+      redirect_to new_jewel_order_payment_path(@jewel, @order)
     else
       render jewel_path(@jewel)
     end
